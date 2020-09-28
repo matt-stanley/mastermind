@@ -1,0 +1,21 @@
+The code will be 4 digits, 1 - 6. This represents the six colors in the original game.
+
+Ask the player if they would like to be code maker or breaker.
+
+If the player selects "code maker", prompt to choose difficulty.
+
+If breaker, the computer will randomly generate a code.
+  The player will make a guess and get feedback, the same as from a human opponent.
+  The player wins if they guess within 10 guesses.
+
+If maker, prompt the player to choose CPU difficulty.
+  - Weak will make random guesses.
+  - Standard will use the 1977 Knuth method without minmax.
+  - Mastermind will use the full Knuth algorithm.
+
+The computer will only have 6 guesses.
+
+
+Broken down:
+
+_ - Computer can generate a random code.
