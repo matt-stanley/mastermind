@@ -9,15 +9,11 @@ class Code
 
   def self.generate_code
     code = []
-    (0..3).each do |i|
-      code[i] = rand(1..6)
+    (0..3).each do
+      code.push(rand(1..6))
     end
 
     code
-  end
-
-  def code
-    @code
   end
 
   # Compares the guess made to the current code.
