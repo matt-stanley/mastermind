@@ -17,4 +17,8 @@ class Code
     end
     code
   end
+
+  def code
+    @code
+  end
 end

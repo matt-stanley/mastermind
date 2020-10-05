@@ -1,4 +1,5 @@
 require_relative 'util'
+require 'pp'
 
 class AI
   def initialize
@@ -8,32 +9,38 @@ class AI
   end
 
   def make_guess
-    @possibilities.remove(@current_guess)
+    @possibilities.delete(@current_guess)
     @current_guess
   end
 
   def generate_guess(response)
     eliminate_solutions(response)
-    @current_guess = 
+    minmax
+  end
 
   def eliminate_solutions(response)
     @solution_set.each do |solution|
       unless Util.compare(@current_guess, solution) == response
-        puts "AI removing solution #{solution}"
-        @solution_set.remove(solution)
+        # puts "AI removing solution #{solution}"
+        @solution_set.delete(solution)
       end
     end
   end
 
   def minmax
-    comparisons = Hash.new(0)
-    maxes = 
+    hit_scores = {}
     @possibilities.each do |possibility|
+      hit_scores[possibility] = {}
       @solution_set.each do |solution|
         response = Util.compare(possibility, solution)
-        comparisons[response] += 1
+        if hit_scores[possibility][response].nil?
+          hit_scores[possibility][response] = 1
+        else
+          hit_scores[possibility][response] += 1
+        end
       end
     end
-    
 
+    
+  end
 end
