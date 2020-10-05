@@ -1,6 +1,6 @@
 require_relative 'code'
-
-
+require_relative 'ai'
+require_relative 'util'
 
 
 ## If player is breaker
