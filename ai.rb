@@ -14,14 +14,22 @@ class AI
   end
 
   def generate_guess(response)
+    guess_ready = false
     eliminate_solutions(response)
-    minmax
+    possible_guesses = minmax
+    possible_guesses.each do |guess|
+      next unless @solution_set.include?(guess);
+
+      @current_guess = guess
+      guess_ready = true
+      break
+    end
+    @current_guess = possible_guesses[0] unless guess_ready
   end
 
   def eliminate_solutions(response)
     @solution_set.each do |solution|
       unless Util.compare(@current_guess, solution) == response
-        # puts "AI removing solution #{solution}"
         @solution_set.delete(solution)
       end
     end
@@ -29,6 +37,8 @@ class AI
 
   def minmax
     hit_scores = {}
+    max_scores = {}
+
     @possibilities.each do |possibility|
       hit_scores[possibility] = {}
       @solution_set.each do |solution|
@@ -41,6 +51,33 @@ class AI
       end
     end
 
-    
+    hit_scores.each do | key, value |
+      max_score = get_max(value)
+      max_scores[key] = max_score
+    end
+
+    get_min(max_scores)
+  end
+
+  def get_max(hit_hash)
+    max = hit_hash.reduce(0) do | max, (_key, val) |
+      val > max ? val : max
+    end
+    max
+  end
+
+  def get_min(scores)
+    result = []
+    min = scores.values[0]
+    scores.each do |key, value|
+      if value < min
+        result.clear
+        min = value
+        result.push(key)
+      elsif value == min
+        result.push(key)
+      end 
+    end
+    result
   end
 end

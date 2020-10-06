@@ -25,10 +25,23 @@ require_relative 'ai'
 # end
 
 # puts "You won! Now bugger off."
-
+perfect = {
+  'black' => 4,
+  'white' => 0
+}
 code = Code.new(true).code
+puts "\nThe computer is thinking..."
 ai = AI.new
+response = {}
 
-response = Util.compare(ai.make_guess, code)
-ai.generate_guess(response)
-p ai.make_guess
+until response == perfect
+  ai_guess = ai.make_guess
+  puts "AI guesses #{ai_guess.join}"
+  response = Util.compare(ai_guess, code)
+  if response != perfect
+    puts response.to_s
+    puts "\nThe computer is thinking..."
+    ai.generate_guess(response)
+  end
+end
+
